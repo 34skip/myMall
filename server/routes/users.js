@@ -54,6 +54,7 @@ router.post('/loginout', function (req, res, next) {
   })
 })
 
+// 检查登录
 router.get('/cheacklogin', function (req, res, next) {
   if (req.cookies.userId) {
     res.json({
@@ -68,6 +69,49 @@ router.get('/cheacklogin', function (req, res, next) {
       result: ''
     })
   }
+})
+
+// 购物车列表
+router.get('/cartList', function (req, res, next) {
+  var userId = req.cookies.userId
+  User.findOne({userId: userId}, function (err, doc) {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message
+      })
+    } else {
+      if (doc) {
+        res.json({
+          status: '0',
+          msg: '',
+          result: doc.cartList
+        })
+      }
+    }
+  })
+})
+
+// 购物车删除
+router.post('/cartDel', function (req, res, next) {
+  var userId = req.cookies.userId
+  var productId = req.body.productId
+  User.update({userId: userId}, {$pull: {'cartList': {'productId': productId}}}, function (err, doc) {
+    if (err) {
+      res.json({
+        status: '1',
+        msg: err.message
+      })
+    } else {
+      if (doc) {
+        res.json({
+          status: '0',
+          msg: '',
+          result: 'suc'
+        })
+      }
+    }
+  })
 })
 
 module.exports = router

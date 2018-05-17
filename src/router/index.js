@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/views/HelloWorld'
 import Dheader from '@/views/Dheader'
+import myChart from '@/views/myChart'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
           component: Dheader
         }
       ]
+    },
+    {
+      path: '/myChart',
+      name: 'myChart',
+      component: myChart
     }
   ]
 })

@@ -3,7 +3,9 @@
     <!--<router-view></router-view>-->
     <!--<Dbtn :num="num" @plusup="plus"></Dbtn>-->
     <!--<div @click="reasource ">reasource </div>-->
-    <el-button v-if="loginType === '已登录'" type="text">{{userName}}</el-button>
+    <el-button v-if="loginType === '已登录'" type="text">{{userName}}
+      <i class="iconfont icon-gouwuche" @click="gochart"></i>
+    </el-button>
     <el-button v-if="loginType === '未登录'" type="text" @click="dialogVisible = true">登录</el-button>
     <el-button v-if="loginType === '已登录'" type="text" @click="loginOut">登出</el-button>
     <div>{{loginType}}</div>
@@ -72,6 +74,10 @@ export default {
     this.cheackLogin()
   },
   methods: {
+    gochart () {
+      //  跳转到购物车
+      this.$router.push('/myChart')
+    },
     cheackLogin () {
       var self = this
       axios.get('/users/cheacklogin').then((response) => {
@@ -205,6 +211,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  @font-face {
+    font-family: 'iconfont';  /* project id 671126 */
+    src: url('//at.alicdn.com/t/font_671126_r5j1ixnq3m29be29.eot');
+    src: url('//at.alicdn.com/t/font_671126_r5j1ixnq3m29be29.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_671126_r5j1ixnq3m29be29.woff') format('woff'),
+    url('//at.alicdn.com/t/font_671126_r5j1ixnq3m29be29.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_671126_r5j1ixnq3m29be29.svg#iconfont') format('svg');
+  }
 .listWrap{
   width: 400px;
   height: 400px;
