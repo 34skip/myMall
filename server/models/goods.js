@@ -5,6 +5,8 @@ var produtSchema = new Schema({
   "productId" : String,
   "productName" : String,
   "prodcutPrice" : Number,
+  'prodcutNum': Number,
+  'cheaked': String,
   "prodcutImg" : String
 })
 

@@ -9,10 +9,11 @@
       </el-tabs>
       <el-card class="box-card" v-for="(item,index) in cartLists" :key="index" style="margin-top: 10px">
         <div class="cardWarp">
+          <el-checkbox @change="checkChange(item)" style="margin-right: 10px"></el-checkbox>
           <div class="cardimg" style=""></div>
           <div style="flex: 1">{{item.productName}}</div>
           <div style="flex: 1">{{item.salePrice}}</div>
-          <el-input-number size="mini" v-model="item.productNum"></el-input-number>
+          <el-input-number size="mini" :min="1" v-model="item.productNum"  @change="handleChange($event, item)"></el-input-number>
           <div style="flex: 1">{{item.salePrice * item.productNum}}</div>
           <div class="iconfont icon-lajixiang removeCart" style="cursor: pointer" @click="remove(item.productId)"></div>
         </div>
@@ -45,12 +46,32 @@ export default {
   created () {
     this.getCartList()
   },
+  watch: {
+
+  },
   methods: {
+    checkChange (item) {
+    },
+    handleChange (value, item) {
+      // console.log(value, item.productId)
+      axios.post('/users/cartEdit', {
+        productId: item.productId,
+        productNum: value
+        // checked: item.checked
+      }).then((response) => {
+        console.log(response.data)
+        if (response.data.status === '0') {
+        }
+      })
+    },
     getCartList () {
       // var self = this
       axios.get('/users/cartList').then((response) => {
         console.log(response.data)
         if (response.data.status === '0') {
+          response.data.result.forEach((item) => {
+            item.checked === '1' ? item.check = true : item.check = false
+          })
           this.cartLists = response.data.result
         }
       })
